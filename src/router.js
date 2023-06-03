@@ -14,3 +14,12 @@ export const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+export function routerPush(name, params) {
+  return params !== undefined
+    ? router.push({
+        name,
+        params,
+      })
+    : router.push({ name });
+}

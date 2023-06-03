@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <section class="vh-100 bg-image"
+    <div class="">
+        <section class="bg-image"
   style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
@@ -13,11 +13,11 @@
               <form>
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg fs-6" placeholder="Your Name" />
+                  <input type="text" class="form-control form-control-lg fs-6" placeholder="Name" />
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg fs-6" placeholder="Your Email" />
+                  <input type="email" class="form-control form-control-lg fs-6" placeholder="Email" />
                 </div>
 
                 <div class="form-outline mb-4">
@@ -28,13 +28,13 @@
                   <input type="password" class="form-control form-control-lg fs-6" placeholder="Repeat your password" />
                 </div>
 
-                <div class="d-flex justify-content-center">
-                  <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                <div class="input-group mb-3">
+                    <button class="btn btn-lg btn-primary fs-6">Register</button>
                 </div>
 
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
+                <div class="row">
+                    <small>Have already an account? <router-link to="/login">Sign In</router-link></small>
+                </div>
 
               </form>
 
@@ -53,6 +53,9 @@ export default {
 }
 </script>
 <style scope>
+    section {
+        height: 90vh;
+    }
     .gradient-custom-3 {
         background: #84fab0;
         background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
