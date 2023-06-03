@@ -17,7 +17,7 @@ export function useJobs () {
         if (responsePromise !== null) {
         const response = await responsePromise
         jobs.value = response.data.data //fix later
-        jobsCount.value = response.data.data.count
+        jobsCount.value = response.data.total
         } else {
         console.error(`Something went wrong while fetching data`)
         }

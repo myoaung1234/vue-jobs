@@ -1,4 +1,5 @@
 <script setup>
+import Pagination from '../components/Pagination.vue';
 import { useJobs } from '../composables/useJobs'
 const {
   fetchJobs,
@@ -11,7 +12,6 @@ const {
 } = useJobs()
 
 await fetchJobs()
-console.log("jobs", jobs)
 </script>
 
 <template>
@@ -39,7 +39,6 @@ console.log("jobs", jobs)
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr
                         v-for="(job, index) in jobs"
                         :key="job.id"
@@ -49,12 +48,13 @@ console.log("jobs", jobs)
                         <td>{{job.company}} </td>
                         <td>{{ job.salary }}</td>
                         </tr>
-                       
                     </tbody>
                     </table>
             </div>
+            <p>Total Jobs : {{ jobsCount }}</p>
+            <Pagination />
 </template>
 
-<style lang="">
+<style scope>
     
 </style>

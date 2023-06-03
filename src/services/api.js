@@ -59,6 +59,29 @@ export class Api extends HttpClient {
           ...params,
         }),
     };
+
+    users = {
+      login: (
+        data,
+        params = {}
+      ) => 
+      this.request({
+        path: `/login`,
+        method: 'POST',
+        body: data,
+        ...params,
+      }),
+      register: (
+        data,
+        params = {},
+      ) =>
+      this.request({
+        path: `/register`,
+        method: 'POST',
+        body: data,
+        ...params,
+      })
+    };
     
   }
 
