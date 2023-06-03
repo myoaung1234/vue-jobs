@@ -2,33 +2,45 @@
 
 </script>
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <form>
-                    <div class="mb-3">
-                        <h4>Login to Post Jobs</h4>
+    <div class="container d-flex justify-content-center align-items-center min-vh-80 p-3">
+        <div class="col-lg-6 rounded-4 bg-white" >
+           <div class="col-lg-12 rounded-4 d-flex justify-content-center align-items-center backgroundImage" style="background-image: url('https://images.pexels.com/photos/12883026/pexels-photo-12883026.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+               <h3 class="fw-bold text-white">SIGN IN</h3>
+           </div> 
+           <div class="col-lg-12 p-3">
+              <div class="row justify-content-center align-items-center">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Email address">
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password">
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    <div class="input-group mb-3 d-flex justify-content-between">
+                        <div class="forgot">
+                            <small><a href="#">Forgot Password?</a></small>
+                        </div>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-lg btn-primary fs-6">Login</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-            </div>
+                    
+                    <div class="row">
+                        <small>Don't have account? <router-link to="/register">Sign Up</router-link></small>
+                    </div>
+                </div>
+            </div> 
         </div>
     </div>
 </template>
 
 <style scoped>
+    .backgroundImage {
+        background-position: 0;
+        background-repeat: no-repeat;
+        height: 200px;
+        margin-bottom: 20px;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
     
 </style>
