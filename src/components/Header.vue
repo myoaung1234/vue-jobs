@@ -2,8 +2,27 @@
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '../store/user'
 import { computed } from 'vue'
+import { routerPush } from '../router'
+
 const { user } = storeToRefs(useUserStore())
 const loggedIn = computed(() => user.value?.name ? true : false)
+const { updateUser } = useUserStore()
+
+const logout = (e) => {
+    console.log(e)
+    const confm = confirm ('Are you sure to Logout?')
+    if(confm) {
+        updateUser();
+    }
+}
+
+const goToPostJob = async (e) => {
+    if(!loggedIn.value) {
+        return alert('You need to login first in order to post a new job!')
+    }
+    await routerPush('postjob')
+}
+
 
 </script>
 
@@ -24,10 +43,10 @@ const loggedIn = computed(() => user.value?.name ? true : false)
                         <router-link to="#" class="nav-link text-white active" aria-current="page">Welcome, {{ user.name }}</router-link>
                     </li>
                     <li class="nav-item" v-if="loggedIn">
-                        <router-link to="#" class="nav-link text-white active" aria-current="page">Logout</router-link>
+                        <a href="#" @click="logout($event)" class="nav-link text-white active" aria-current="page">Logout</a>
                     </li>
                 </ul>
-                <router-link to="/post-job" class="btn btn-success">Post a Job</router-link>
+                <button type="button" @click="goToPostJob($event)" class="btn btn-success">Post a Job</button>
             </div>
         </div>
     </nav>

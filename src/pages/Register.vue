@@ -1,4 +1,39 @@
 <script setup>
+import { routerPush } from '../router';
+import { api, isFetchError } from '../services'
+import { useUserStore } from '../store/user'
+import { reactive, ref } from 'vue'
+
+const formRef = ref(null)
+const form = reactive({
+  name: '',
+  email: '',
+  password: '',
+  confirm_password: ''
+})
+
+const { updateUser } = useUserStore()
+
+const errors = ref()
+const loading = ref(false)
+
+const register = async () => {
+  errors.value = ""
+  if (!formRef.value?.checkValidity()) return
+  loading.value = true;
+  try {
+    const result = await api.users.register({ name: form.name, email: form.email, password: form.password })
+    updateUser(result.data.user, result.data.access_token)
+    await routerPush('home')
+  } catch (e) {
+    console.log(e)
+    loading.value = false;
+    if (isFetchError(e)) {
+      errors.value = e.error?.errors
+      return
+    }
+  }
+}
 
 </script>
 
@@ -14,26 +49,39 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase fw-bold text-center mb-5 text-success">Create Account</h2>
 
-              <form>
+              <form
+              ref="formRef"
+              @submit.prevent="register"
+              >
 
                 <div class="form-outline mb-4">
-                  <input type="text" class="form-control form-control-lg fs-6 shadow-none" placeholder="Name" />
+                  <input type="text" class="form-control form-control-lg fs-6 shadow-none" 
+                  v-model="form.name" placeholder="Name" />
+                  <p class="text-danger m-2" v-if="errors?.name">{{ errors.name[0] }}</p>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" class="form-control form-control-lg fs-6 shadow-none" placeholder="Email" />
+                  <input type="email" class="form-control form-control-lg fs-6 shadow-none"
+                  v-model="form.email" placeholder="Email" />
+                  <p class="text-danger m-2" v-if="errors?.email">{{ errors.email[0] }}</p>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" class="form-control form-control-lg fs-6 shadow-none" placeholder="Password" />
+                  <input type="password" class="form-control form-control-lg fs-6 shadow-none"
+                  v-model="form.password" placeholder="Password" />
+                  <p class="text-danger m-2" v-if="errors?.password">{{ errors.password[0] }}</p>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" class="form-control form-control-lg fs-6 shadow-none" placeholder="Repeat your password" />
+                  <input type="password" class="form-control form-control-lg fs-6 shadow-none" 
+                  placeholder="Repeat your password" />
                 </div>
 
                 <div class="input-group mb-3">
-                    <button class="btn btn-lg btn-success fs-6">Register</button>
+                    <button class="btn btn-lg btn-success fs-6">
+                      <span v-if="loading">Working ..</span>
+                      <span v-else>Register</span>
+                    </button>
                 </div>
 
                 <div class="row">

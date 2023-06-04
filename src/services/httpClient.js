@@ -1,4 +1,6 @@
 
+import Storage from '../utils/storage';
+
 export  const ContentType = {
   Json : "application/json",
   FormData : "multipart/form-data",
@@ -38,6 +40,13 @@ export class HttpClient {
   
     constructor(apiConfig = {}) {
       Object.assign(this, apiConfig);
+
+      const userStorage = new Storage('user')
+      let user = userStorage.get()
+      if(user?.token) {
+        this.setSecurityData(user.token);
+      }
+      
     }
   
     setSecurityData = (data) => {

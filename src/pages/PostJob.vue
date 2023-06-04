@@ -1,5 +1,39 @@
 <script setup>
-    
+    import { routerPush } from '../router';
+    import { api, isFetchError } from '../services'
+    import { useUserStore } from '../store/user'
+    import { reactive, ref } from 'vue'
+
+    const formRef = ref(null)
+    const form = reactive({
+        title: '',
+        company: '',
+        company_logo: '',
+        category: '',
+        salary: '',
+        description: ''
+    })
+
+    const errors = ref()
+    const loading = ref(false)
+
+    const postJob = async () => {
+        errors.value = ""
+        if (!formRef.value?.checkValidity()) return
+        loading.value = true;
+        try {
+            const result = await api.jobs.createJob(form)
+            loading.value = false;
+            await routerPush('home')
+        } catch (e) {
+            console.log(e)
+            loading.value = false;
+            if (isFetchError(e)) {
+                errors.value = e.error?.errors
+                return
+            }
+        }
+    }
 </script>
 
 <template>
@@ -13,14 +47,21 @@
               <div class="card" style="border-radius: 5px;">
                 <div class="card-body p-4">
                   <h2 class="text-uppercase text-center mb-5 fw-bold color">Job Post</h2>
-                    <form>
+                    <form
+                    ref="formRef"
+                    @submit.prevent="postJob"
+                    >
                         <div class="form-outline mb-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Title" />
+                            <input type="text" class="form-control shadow-none"
+                            v-model="form.title" placeholder="Title" />
+                            <p class="text-danger m-2" v-if="errors?.title">{{ errors.title[0] }}</p>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                             <div class="form-outline">
-                                <input type="text" class="form-control shadow-none" placeholder="Company" />
+                                <input type="text" class="form-control shadow-none"
+                                v-model="form.company" placeholder="Company" />
+                                <p class="text-danger m-2" v-if="errors?.company">{{ errors.company[0] }}</p>
                             </div>
                             </div>
                             <div class="col">
@@ -33,21 +74,29 @@
                         <div class="row mb-4">
                             <div class="col">
                             <div class="form-outline">
-                                <input type="text" class="form-control shadow-none" placeholder="Category" />
+                                <input type="text" class="form-control shadow-none"
+                                v-model="form.category" placeholder="Category" />
+                                <p class="text-danger m-2" v-if="errors?.category">{{ errors.category[0] }}</p>
                             </div>
                             </div>
                             <div class="col">
                             <div class="form-outline">
-                                <input type="text" class="form-control shadow-none" placeholder="Salary" />
+                                <input type="text" class="form-control shadow-none"
+                                v-model="form.salary" placeholder="Salary" />
                             </div>
                             </div>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <textarea class="form-control shadow-none" rows="4" placeholder="Description"></textarea>
+                            <textarea class="form-control shadow-none" rows="4"
+                            v-model="form.description" placeholder="Description"></textarea>
+                            <p class="text-danger m-2" v-if="errors?.description">{{ errors.description[0] }}</p>
                         </div>
 
-                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                        <button type="submit" class="btn btn-success btn-block">
+                            <span v-if="loading">Working ..</span>
+                            <span v-else>Submit</span>
+                        </button>
                     </form>
                 </div>
               </div>

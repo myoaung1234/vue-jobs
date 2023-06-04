@@ -32,7 +32,7 @@ export class Api extends HttpClient {
 
       getJob: (id, params = {}) =>
         this.request({
-          path: `/articles/${slug}`,
+          path: `/jobs/${id}`,
           method: "GET",
           secure: false,
           ...params,

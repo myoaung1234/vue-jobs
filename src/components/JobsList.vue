@@ -1,39 +1,43 @@
 <script setup>
 import Pagination from '../components/Pagination.vue';
 import { useJobs } from '../composables/useJobs'
+import { routerPush } from '../router';
+import { api, isFetchError } from '../services'
 const {
   fetchJobs,
-  jobsDownloading,
   jobsCount,
   jobs,
-  updateJob,
   page,
   changePage,
 } = useJobs()
 
 await fetchJobs()
+
+const deleteJob = async (id) => {
+    
+    try {
+        let yes = confirm('Are you sure to delete this job post?')
+        if(!yes){return}
+        const result = await api.jobs.deleteJob(id)
+        await fetchJobs()
+    } catch (e) {
+        console.log(e)
+        if (isFetchError(e)) {
+            errors.value = e.error?.errors
+            return
+        }
+    }
+}
 </script>
 
 <template>
     <div class="col-lg-12">
-        <div
-        v-if="jobsDownloading"
-        class="jobs-preview"
-        >
-            Loading. Please wait...!
-        </div>
-        <div
-        v-else-if="jobs.length === 0"
-        class="jobs-preview"
-        >
-            No jobs are here... yet.
-        </div>
-
         <table class="table align-middle mb-4 bg-white">
             <thead class="bg-light">
                 <tr>
                     <th>#</th>
                     <th>Company Logo</th>
+                    <th>Action</th>
                     <th>Title</th>
                     <th>Company</th>
                     <th>Category</th>
@@ -44,7 +48,7 @@ await fetchJobs()
             <tbody>
                 <tr
                 v-for="(job, index) in jobs"
-                :key="index"
+                :key="job.id"
                 >
                     <td>
                         <p class="fw-normal">{{ job.id }}</p>
@@ -58,6 +62,10 @@ await fetchJobs()
                         class="w-100 h-100"
                         />
                         </div>
+                    </td>
+                    <td>
+                        <router-link :to="{ name: 'editjob', params:{id: job.id} }" class="btn btn-success">Edit</router-link>
+                        <button @click="deleteJob(job.id)" type="button" class="btn btn-danger">Delete</button>
                     </td>
                     <td>
                         <p class="fw-normal">{{ job.title }}</p>
