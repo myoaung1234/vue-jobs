@@ -1,4 +1,4 @@
 export const CONFIG = {
-    API_HOST: 'http://localhost:8000',
-}
+  API_HOST: "https://myoaungdev.codingburma.com",
+};
 
