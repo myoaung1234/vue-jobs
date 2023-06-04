@@ -38,12 +38,12 @@ const deleteJob = async (id) => {
                 <tr>
                     <th>#</th>
                     <th>Company Logo</th>
-                    <th>Action</th>
                     <th>Title</th>
                     <th>Company</th>
                     <th>Category</th>
                     <th>Salary</th>
-                    <th>Description</th>
+                    <th>Posted By</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,19 +55,16 @@ const deleteJob = async (id) => {
                         <p class="fw-normal">{{ job.id }}</p>
                     </td>
                     <td>
-                        <div style="width: 45px; height: 45px ; overflow: hidden;" class="rounded-circle">
+                        <div style="width: 45px; height: 45px ; overflow: hidden;" class="rounded-circle" v-if="job.company_logo">
                         <img
-                        src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/apple-logo.png"
+                        :src="job.company_logo"
                         alt=""
                         style="object-fit: cover;"
                         class="w-100 h-100"
                         />
                         </div>
                     </td>
-                    <td>
-                        <router-link :to="{ name: 'editjob', params:{id: job.id} }" class="btn btn-success">Edit</router-link>
-                        <button @click="deleteJob(job.id)" type="button" class="btn btn-danger">Delete</button>
-                    </td>
+                    
                     <td>
                         <p class="fw-normal">{{ job.title }}</p>
                     </td>
@@ -81,7 +78,11 @@ const deleteJob = async (id) => {
                         <p class="fw-normal">{{ job.salary }}</p>
                     </td>
                     <td class="w-25">
-                        <p class="fw-normal">{{ job.description }}</p>
+                        <p class="fw-normal">{{ job.author?.name }}</p>
+                    </td>
+                    <td class="">
+                        <router-link :to="{ name: 'editjob', params: { id: job.id } }" class="btn btn-success me-3">Edit</router-link>
+                        <button @click="deleteJob(job.id)" type="button" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             </tbody>

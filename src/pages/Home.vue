@@ -11,7 +11,9 @@ import JobsList from '../components/JobsList.vue'
             <Suspense>
                 <JobsList />
                 <template #fallback>
-                    Something happening...
+                    <div style="width: 100vw; height: 70vh; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="" style="width: 150px; height: 150px;"/>
+                    </div>
                 </template>
             </Suspense>
         </div>

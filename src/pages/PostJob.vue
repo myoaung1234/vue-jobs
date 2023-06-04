@@ -3,6 +3,7 @@
     import { api, isFetchError } from '../services'
     import { useUserStore } from '../store/user'
     import { reactive, ref } from 'vue'
+    import { CONFIG } from '../config'
 
     const formRef = ref(null)
     const form = reactive({
@@ -16,6 +17,9 @@
 
     const errors = ref()
     const loading = ref(false)
+    const uploading = ref(false)
+    const uploadError = ref()
+
 
     const postJob = async () => {
         errors.value = ""
@@ -34,6 +38,42 @@
             }
         }
     }
+
+    const handleFileUpload = async (e) => {
+        let file = e.target.files[0]
+        let formData = new FormData();
+
+    
+    formData.append('image', file);
+        uploading.value = true
+    try {
+        const response = await fetch(CONFIG.API_HOST + "/api/image_upload", {
+            method: 'POST',
+            headers: {
+                // 'Authorization': 'Bearer ' + this.token,
+                'Accept': 'application/json',
+            },
+            body: formData
+        })
+        const result = await response.json()
+        uploading.value = false
+        
+        if(result?.image){form.company_logo = result.image}
+        if(result?.errors){uploadError.value = result?.errors}
+    } catch (error) {
+        console.log('error')
+        uploading.value = false
+        console.log(error)
+        if(error) {
+
+        }
+    }
+    }
+
+
+
+
+
 </script>
 
 <template>
@@ -58,32 +98,44 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col">
-                            <div class="form-outline">
-                                <input type="text" class="form-control shadow-none"
-                                v-model="form.company" placeholder="Company" />
-                                <p class="text-danger m-2" v-if="errors?.company">{{ errors.company[0] }}</p>
-                            </div>
-                            </div>
+                                <div class="form-outline">
+                                    <input type="text" class="form-control shadow-none"
+                                    v-model="form.category" placeholder="Category" />
+                                    <p class="text-danger m-2" v-if="errors?.category">{{ errors.category[0] }}</p>
+                                </div>
+                                </div>
+                                <div class="col">
+                                <div class="form-outline">
+                                    <input type="text" class="form-control shadow-none"
+                                    v-model="form.salary" placeholder="Salary" />
+                                </div>
+                                </div>
+                            
+                            
+                        </div>
+                        <div class="row mb-4">
                             <div class="col">
-                            <div class="form-outline">
-                                <input type="file" class="form-control shadow-none" placeholder="Company Logo" />
-                            </div>
-                            </div>
+                                <div class="form-outline">
+                                    <input type="text" class="form-control shadow-none"
+                                    v-model="form.company" placeholder="Company" />
+                                    <p class="text-danger m-2" v-if="errors?.company">{{ errors.company[0] }}</p>
+                                </div>
+                                </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col">
-                            <div class="form-outline">
-                                <input type="text" class="form-control shadow-none"
-                                v-model="form.category" placeholder="Category" />
-                                <p class="text-danger m-2" v-if="errors?.category">{{ errors.category[0] }}</p>
-                            </div>
+                                <div class="form-outline">
+                                    <label for="image-upload" class="mb-2">Company Logo</label>
+                                    <input type="file" id="image-upload" @change="handleFileUpload($event)" class="form-control shadow-none" placeholder="Company Logo" />
+                                    <p class="text-danger m-2" v-if="uploadError?.image">{{ uploadError?.image[0] }}</p>
+                                    <p class="text-success m-2" v-if="uploading">Uploading ..</p>
+                                </div>
                             </div>
                             <div class="col">
-                            <div class="form-outline">
-                                <input type="text" class="form-control shadow-none"
-                                v-model="form.salary" placeholder="Salary" />
-                            </div>
+                                <p v-if="form.company_logo">
+                                    <img :src="form.company_logo" alt="" style="width: 100px; "/>
+                                </p>
                             </div>
                         </div>
 
@@ -93,6 +145,7 @@
                             <p class="text-danger m-2" v-if="errors?.description">{{ errors.description[0] }}</p>
                         </div>
 
+                        <router-link to="/" class="btn btn-secondary me-2">Cancel</router-link>
                         <button type="submit" class="btn btn-success btn-block">
                             <span v-if="loading">Working ..</span>
                             <span v-else>Submit</span>
