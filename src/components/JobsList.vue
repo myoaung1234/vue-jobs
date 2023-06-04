@@ -91,7 +91,7 @@ const deleteJob = async (job) => {
                     <td class="">
                         <router-link v-if="user && user.id ==job.author.id" :to="{ name: 'editjob', params: { id: job.id } }" class="btn btn-success me-3">Edit</router-link>
                         <button v-if="user && user.id == job.author.id" @click="deleteJob(job)" type="button" class="btn btn-danger">Delete</button>
-                        <p v-if="!user">-</p>
+                        <p v-if="!user && user.id != job.author.id">-</p>
                     </td>
                 </tr>
             </tbody>
