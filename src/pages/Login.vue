@@ -41,7 +41,7 @@
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                             <div class="card" style="border-radius: 5px;">
                                 <div class="card-body p-5">
-                                    <h2 class="text-uppercase fw-bold text-center mb-5 color">Sign In</h2>
+                                    <h2 class="text-uppercase fw-bold text-center mb-5 text-success">Sign In</h2>
                                     <form
                                     ref="formRef"
                                     @submit.prevent="login"
@@ -56,7 +56,7 @@
                                             placeholder="Password" v-model="form.password" required/>
                                         </div>
                                         <div class="input-group mb-3">
-                                            <button class="btn btn-lg btn-primary fs-6" type="submit"  :disabled="!form.email || !form.password">
+                                            <button class="btn btn-lg btn-success fs-6" type="submit"  :disabled="!form.email || !form.password">
                                                 <span v-if="loading">Working ..</span>
                                                 <span v-else>Login</span>
                                             </button>
@@ -64,7 +64,7 @@
                                     </form>
 
                                     <div class="row mb-3">
-                                        <small>Don't have account? <router-link to="/register">Sign Up</router-link></small>
+                                        <small>Don't have account? <router-link to="/register" class="text-warning">Sign Up</router-link></small>
                                     </div>
                                     <p v-if="errors" class="alert alert-danger">{{ errors }}</p>
                                 </div>
@@ -79,7 +79,7 @@
 
 <style scoped>
     section {
-        height: 80vh;
+        height: 82vh;
     }
     .gradient-custom-3 {
         background: #84fab0;

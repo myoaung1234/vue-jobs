@@ -21,10 +21,10 @@ const loggedIn = computed(() => user.value?.name ? true : false)
                         <router-link to="/register" class="nav-link text-white active" aria-current="page">Register</router-link>
                     </li>
                     <li class="nav-item" v-if="loggedIn">
-                        <router-link to="#" class="nav-link active" aria-current="page">Welcome, {{ user.name }}</router-link>
+                        <router-link to="#" class="nav-link text-white active" aria-current="page">Welcome, {{ user.name }}</router-link>
                     </li>
                     <li class="nav-item" v-if="loggedIn">
-                        <router-link to="#" class="nav-link active" aria-current="page">Logout</router-link>
+                        <router-link to="#" class="nav-link text-white active" aria-current="page">Logout</router-link>
                     </li>
                 </ul>
                 <router-link to="/post-job" class="btn btn-success">Post a Job</router-link>

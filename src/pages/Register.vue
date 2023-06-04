@@ -12,7 +12,7 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 5px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase fw-bold text-center mb-5 color">Create Account</h2>
+              <h2 class="text-uppercase fw-bold text-center mb-5 text-success">Create Account</h2>
 
               <form>
 
@@ -33,11 +33,11 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <button class="btn btn-lg btn-primary fs-6">Register</button>
+                    <button class="btn btn-lg btn-success fs-6">Register</button>
                 </div>
 
                 <div class="row">
-                    <small>Have already an account? <router-link to="/login">Sign In</router-link></small>
+                    <small>Have already an account? <router-link to="/login" class="text-warning">Sign In</router-link></small>
                 </div>
 
               </form>
