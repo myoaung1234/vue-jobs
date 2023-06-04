@@ -1,8 +1,10 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import Pagination from '../components/Pagination.vue';
 import { useJobs } from '../composables/useJobs'
 import { routerPush } from '../router';
 import { api, isFetchError } from '../services'
+import { useUserStore } from '../store/user'
 const {
   fetchJobs,
   jobsCount,
@@ -13,10 +15,16 @@ const {
 } = useJobs()
 
 await fetchJobs()
+const { user } = storeToRefs(useUserStore())
 
-const deleteJob = async (id) => {
+const deleteJob = async (job) => {
     
     try {
+
+        // if(!user || (user && user.value.id != job.author.id)){
+        //     return alert('You do not have permission to delete this!')
+        // }
+
         let yes = confirm('Are you sure to delete this job post?')
         if(!yes){return}
         const result = await api.jobs.deleteJob(id)
@@ -81,8 +89,9 @@ const deleteJob = async (id) => {
                         <p class="fw-normal">{{ job.author?.name }}</p>
                     </td>
                     <td class="">
-                        <router-link :to="{ name: 'editjob', params: { id: job.id } }" class="btn btn-success me-3">Edit</router-link>
-                        <button @click="deleteJob(job.id)" type="button" class="btn btn-danger">Delete</button>
+                        <router-link v-if="user && user.id ==job.author.id" :to="{ name: 'editjob', params: { id: job.id } }" class="btn btn-success me-3">Edit</router-link>
+                        <button v-if="user && user.id == job.author.id" @click="deleteJob(job)" type="button" class="btn btn-danger">Delete</button>
+                        <p v-if="!user">-</p>
                     </td>
                 </tr>
             </tbody>
