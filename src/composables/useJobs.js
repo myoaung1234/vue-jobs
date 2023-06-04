@@ -2,12 +2,14 @@ import { pageToOffset, api } from '../services'
 import useAsync from '../utils/use-async'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { limit }from '../services'
 
 export function useJobs () {
 
   const jobs = ref([])
   const jobsCount = ref(0)
   const page = ref(1)
+  const totalPage = ref(1)
 
   async function fetchJobs () {
     jobs.value = []
@@ -16,8 +18,9 @@ export function useJobs () {
             .then(res => res.data)
         if (responsePromise !== null) {
         const response = await responsePromise
-        jobs.value = response.data.data //fix later
-        jobsCount.value = response.data.total
+        jobs.value = response.data //fix later
+        jobsCount.value = response.total
+        totalPage.value = Math.ceil(response.total/limit)
         } else {
         console.error(`Something went wrong while fetching data`)
         }
@@ -33,12 +36,6 @@ export function useJobs () {
 
   const { active: jobsDownloading, run: runWrappedFetchJobs } = useAsync(fetchJobs)
 
-//   watch(metaChanged, async () => {
-//     if (page.value !== 1) changePage(1)
-//     else await runWrappedFetchJobs()
-//   })
-console.log("jobsloading ", jobsDownloading);
-
   watch(page, runWrappedFetchJobs)
 
   return {
@@ -47,6 +44,7 @@ console.log("jobsloading ", jobsDownloading);
     jobs,
     jobsCount,
     page,
+    totalPage,
     changePage,
     updateJob,
   }

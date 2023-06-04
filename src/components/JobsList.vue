@@ -8,6 +8,7 @@ const {
   jobsCount,
   jobs,
   page,
+  totalPage,
   changePage,
 } = useJobs()
 
@@ -86,8 +87,7 @@ const deleteJob = async (id) => {
             </tbody>
         </table>
     </div>
-    <p>Total Jobs : {{ jobsCount }}</p>
-    <Pagination />
+    <Pagination @page-change="changePage" :totalPage="totalPage" :page="page"/>
 </template>
 
 <style scope>

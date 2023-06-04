@@ -2,7 +2,7 @@ import { CONFIG } from '../config'
 import { Api } from './api'
 import { ContentType, GenericErrorModel, HttpResponse } from './httpClient'
 
-export const limit = 10
+export const limit = 5
 
 export const api = new Api({
   baseUrl: `${CONFIG.API_HOST}/api`,
