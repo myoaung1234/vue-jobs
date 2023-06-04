@@ -9,9 +9,3 @@
     letter-spacing: 0.5px;
 }
 
-main {
-    background-color: #EBEEEF;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}

@@ -32,61 +32,70 @@
 </script>
 
 <template>
-    <div class="container d-flex justify-content-center align-items-center min-vh-80 p-3">
-        <div class="col-lg-6 rounded-4 bg-white" >
-           <div class="col-lg-12 rounded-4 d-flex justify-content-center align-items-center backgroundImage" style="background-image: url('https://images.pexels.com/photos/12883026/pexels-photo-12883026.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
-               <h3 class="fw-bold text-white">SIGN IN</h3>
-           </div> 
-           <div class="col-lg-12 p-3">
-              <div class="row justify-content-center align-items-center">
-                <form
-                ref="formRef"
-                @submit.prevent="login"
-                >
-                    <div class="input-group mb-3">
-                        <input type="email" 
-                        v-model="form.email" 
-                        required 
-                        class="form-control" 
-                        placeholder="Email address">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" 
-                        v-model="form.password" 
-                        required class="form-control" 
-                        placeholder="Password">
-                    </div>
-                    <div class="input-group mb-3 d-flex justify-content-between">
-                        <div class="forgot">
-                            <small><a href="#">Forgot Password?</a></small>
+    <div class="">
+        <section class="bg-image"
+        style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+            <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+                <div class="container h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                            <div class="card" style="border-radius: 5px;">
+                                <div class="card-body p-5">
+                                    <h2 class="text-uppercase fw-bold text-center mb-5 color">Sign In</h2>
+                                    <form
+                                    ref="formRef"
+                                    @submit.prevent="login"
+                                    >
+                                        <div class="form-outline mb-4">
+                                            <input type="email" class="form-control form-control-lg fs-6 shadow-none"
+                                            placeholder="Email" v-model="form.email" required />
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="password" class="form-control form-control-lg fs-6 shadow-none"
+                                            placeholder="Password" v-model="form.password" required/>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <button class="btn btn-lg btn-primary fs-6" type="submit"  :disabled="!form.email || !form.password">
+                                                <span v-if="loading">Working ..</span>
+                                                <span v-else>Login</span>
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div class="row mb-3">
+                                        <small>Don't have account? <router-link to="/register">Sign Up</router-link></small>
+                                    </div>
+                                    <p v-if="errors" class="alert alert-danger">{{ errors }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <button class="btn btn-lg btn-primary fs-6" type="submit" :disabled="!form.email || !form.password">
-                            <span v-if="loading">Working ..</span>
-                            <span v-else>Login</span>
-                        </button>
-                    </div>
-                </form>
-                    
-                    <div class="row">
-                        <small>Don't have account? <router-link to="/register">Sign Up</router-link></small>
-                    </div>
-                    <p v-if="errors" class="alert alert-danger">{{ errors }}</p>
                 </div>
-            </div> 
-        </div>
+            </div>
+        </section>
     </div>
 </template>
 
 <style scoped>
-    .backgroundImage {
-        background-position: 0;
-        background-repeat: no-repeat;
-        height: 200px;
-        margin-bottom: 20px;
-        border-top-right-radius: 3px;
-        border-top-left-radius: 3px;
+    section {
+        height: 80vh;
+    }
+    .gradient-custom-3 {
+        background: #84fab0;
+        background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+        background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+    }
+    .gradient-custom-4 {
+        background: #84fab0;
+        background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+        background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+    }
+
+    .color {
+        color: #84fab0;
+        color: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+        color: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
     }
     
 </style>

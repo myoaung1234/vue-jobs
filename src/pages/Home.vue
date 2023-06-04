@@ -5,8 +5,8 @@ import JobsList from '../components/JobsList.vue'
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h3>Jobs</h3>
+            <div class="col-lg-12 mt-4">
+                <h3 class="fw-bold">Jobs List</h3>
             </div>
             <Suspense>
                 <JobsList />
@@ -18,4 +18,10 @@ import JobsList from '../components/JobsList.vue'
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+    .color {
+        color: #84fab0;
+        color: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+        color: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+    }
+</style>
