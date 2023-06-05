@@ -17,6 +17,7 @@ const {
 await fetchJobs()
 const { user } = storeToRefs(useUserStore())
 
+
 const deleteJob = async (job) => {
     
     try {
@@ -45,12 +46,12 @@ const deleteJob = async (job) => {
             <thead class="bg-light">
                 <tr>
                     <th>#</th>
-                    <th>Company Logo</th>
+                    <th>Company_Logo</th>
                     <th>Title</th>
                     <th>Company</th>
                     <th>Category</th>
                     <th>Salary</th>
-                    <th>Posted By</th>
+                    <th>Posted_By</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -85,13 +86,13 @@ const deleteJob = async (job) => {
                     <td>
                         <p class="fw-normal">{{ job.salary }}</p>
                     </td>
-                    <td class="w-25">
+                    <td>
                         <p class="fw-normal">{{ job.author?.name }}</p>
                     </td>
-                    <td class="">
+                    <td style="width: 200px;">
                         <router-link v-if="user && user.id ==job.author.id" :to="{ name: 'editjob', params: { id: job.id } }" class="btn btn-success me-3">Edit</router-link>
                         <button v-if="user && user.id == job.author.id" @click="deleteJob(job)" type="button" class="btn btn-danger">Delete</button>
-                        <p v-if="!user && user.id != job.author.id">-</p>
+                        <p v-if="!user">-</p>
                     </td>
                 </tr>
             </tbody>
