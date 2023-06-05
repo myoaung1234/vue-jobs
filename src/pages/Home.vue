@@ -12,7 +12,7 @@ import JobsList from '../components/JobsList.vue'
                 <JobsList />
                 <template #fallback>
                     <div style="width: 100vw; height: 70vh; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="" style="width: 150px; height: 150px;"/>
+                        <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="" style="width: 50px; height: 50px;"/>
                     </div>
                 </template>
             </Suspense>
